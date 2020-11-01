@@ -8,6 +8,7 @@ import contextlib
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+import multiprocessing as mp
 
 def get_all_audio_filenames(dir_name):
     filenames = []
@@ -27,11 +28,12 @@ def get_duration_of_audio_file(file_name):
     duration = duration / 3600
     return duration
 
-def get_duration_of_directory(dir_name):
+def get_duration_of_directory(dir_name, pool):
     audio_filenames = get_all_audio_filenames(dir_name)
     duration = 0
-    for audio_filename in audio_filenames:
-        duration += get_duration_of_audio_file(audio_filename)
+    durations = pool.map(get_duration_of_audio_file, audio_filenames)
+    for t in durations:
+        duration = duration + t
     return duration
 
 '''root_dir/topic_name/audio_folder/audio_file'''
@@ -39,8 +41,9 @@ def visualize_topic_duration(root_dir, save_file_name="statistic_topic.csv"):
     data = []
     topic_names = os.listdir(root_dir)
     durations = []
+    pool = mp.Pool(mp.cpu_count())
     for topic_name in topic_names:
-        duration = get_duration_of_directory(os.path.join(root_dir, topic_name))
+        duration = get_duration_of_directory(os.path.join(root_dir, topic_name), pool)
         durations.append(duration)
         data.append([topic_name, str(len(os.listdir(os.path.join(root_dir,topic_name)))), str(duration)])
     df = pd.DataFrame(data, columns=["Topic names", "Link saved", "Total durations"])
