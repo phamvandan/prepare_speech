@@ -135,4 +135,9 @@ def result_from_search(textToSearch):
 
 
 if __name__ == "__main__":
-    result_from_search("là vợ phải thế")
+    f = open("search_query.txt", "r+")
+    query_string = f.readlines()[0]
+    if query_string.strip()=="":
+        raise  EnvironmentError("Please insert the query string in search_query.txt")
+    print("query_string=", query_string)
+    result_from_search(query_string)
