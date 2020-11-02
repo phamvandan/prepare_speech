@@ -2,6 +2,8 @@
 # Installation
 * Create python3 virtual environment for this project.
 ``` 
+    git clone https://github.com/phamvandan/prepare_speech.git
+    cd prepare_speech/
     sudo apt-get install python3-venv 
     sudo python3 -m venv prepare_speech_venv
 ```
