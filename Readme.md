@@ -10,7 +10,7 @@
 * Installing requirements.
 ```
     source prepare_speech_venv/bin/activate
-    pip install -r requirements.txt
+    pip3 install -r requirements.txt
 ```
 # How to run
 * Activate the environment.
