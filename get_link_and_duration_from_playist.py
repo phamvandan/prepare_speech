@@ -5,6 +5,10 @@ import googleapiclient.discovery
 import pafy
 import pandas as pd
 import urllib
+import configparser
+config = configparser.ConfigParser()
+config.read("config.cfg")
+api_key = config["key"]["key1"]
 
 def get_urls_by_playist(url):
     playlist = pafy.get_playlist(url) 
@@ -79,7 +83,7 @@ def duration_converter_to_minute(old_dur):
 
 def data_extract_from_playist_url(url):
     video_id = get_yt_video_id(url)
-    api_key = "AIzaSyCxv27mYNR7wN5oPNlElVBcib5AIGFXV0E"
+    # api_key = "AIzaSyDvbhcbHXUuskRY5wyO-tJHUllCv0kt5UA"
     duration = get_duration(video_id, api_key)
     return [url, duration]
 
